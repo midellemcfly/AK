@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>💖 A Surprise for You 💖</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,7 +17,7 @@
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 400px;
+      max-width: 420px;
     }
     input {
       padding: 10px;
@@ -41,52 +42,105 @@
     .hidden {
       display: none;
     }
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="card">
+<div class="card">
+
+  <!-- STEP 1 -->
+  <div id="step1">
     <h1>💌 Hi, my love 💌</h1>
-    <p>Answer this to unlock your surprise:</p>
+    <p>First question to unlock your surprise:</p>
     <p><i>What do we always order together?</i></p>
 
-    <input id="answer" placeholder="Type your answer..." />
+    <input id="answer1" />
     <br />
-    <button onclick="checkAnswer()">Unlock 💖</button>
+    <button onclick="checkStep1()">Unlock 💖</button>
 
-    <p id="error" class="error hidden">
-      Hmm… that’s not it 👀 Try again 💕
-    </p>
-
-    <div id="secret" class="hidden">
-      <h2>🎂 Happy Birthday, My Favorite Human 🎂</h2>
-      <p>You did it 💕</p>
-      <p>
-        I love you more than coffee in the morning,<br />
-        more than naps on Sundays,<br />
-        and more than anything 💖
-      </p>
-      <p>Here’s to many more banana pancakes together 🥞</p>
-    </div>
+    <p id="error1" class="error hidden"></p>
   </div>
 
-  <script>
-    const SECRET_ANSWER = "banana pancakes"; // change to your inside joke
+  <!-- STEP 2 -->
+  <div id="step2" class="hidden">
+    <h2>😏 Okay okay… one more</h2>
+    <p><i>What do you call me when no one else is around?</i></p>
 
-    function checkAnswer() {
-      const userAnswer = document
-        .getElementById("answer")
-        .value.toLowerCase()
-        .trim();
+    <input id="answer2" />
+    <br />
+    <button onclick="checkStep2()">Almost there 💕</button>
 
-      if (userAnswer === SECRET_ANSWER) {
-        document.getElementById("secret").classList.remove("hidden");
-        document.getElementById("error").classList.add("hidden");
-      } else {
-        document.getElementById("error").classList.remove("hidden");
-      }
+    <p id="error2" class="error hidden"></p>
+  </div>
+
+  <!-- FINAL SURPRISE -->
+  <div id="final" class="hidden">
+    <h2>🎂 HAPPY BIRTHDAY 🎂</h2>
+    <p>You did it, my love 💖</p>
+
+    <img src="birthday.gif" alt="Birthday GIF">
+
+    <p>
+      I love you more than coffee, naps,  
+      and all the inside jokes combined 💕
+    </p>
+
+    <!-- YouTube embed -->
+    <iframe width="300" height="170"
+      src="https://www.youtube.com/embed/K9P8rEw_6Dk?autoplay=1"
+      title="Birthday - The Beatles"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</div>
+
+<script>
+  const ANSWER_1 = "banana pancakes";   // inside joke
+  const ANSWER_2 = "baby";              // nickname
+
+  const WRONG_MESSAGES = [
+    "Nope 😌 but I admire the confidence",
+    "Hmm… close emotionally, not logically 👀",
+    "Think brunch 👀",
+    "I love you, but that’s not it 💕"
+  ];
+
+  function randomError() {
+    return WRONG_MESSAGES[Math.floor(Math.random() * WRONG_MESSAGES.length)];
+  }
+
+  function checkStep1() {
+    const val = document.getElementById("answer1").value.toLowerCase().trim();
+    if (val === ANSWER_1) {
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+    } else {
+      const e = document.getElementById("error1");
+      e.textContent = randomError();
+      e.classList.remove("hidden");
     }
-  </script>
+  }
+
+  function checkStep2() {
+    const val = document.getElementById("answer2").value.toLowerCase().trim();
+    if (val === ANSWER_2) {
+      document.getElementById("step2").classList.add("hidden");
+      document.getElementById("final").classList.remove("hidden");
+    } else {
+      const e = document.getElementById("error2");
+      e.textContent = randomError();
+      e.classList.remove("hidden");
+    }
+  }
+</script>
 
 </body>
 </html>
