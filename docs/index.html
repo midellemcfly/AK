@@ -42,7 +42,7 @@
     .hidden {
       display: none;
     }
-    img {
+    video {
       max-width: 100%;
       border-radius: 15px;
       margin-top: 20px;
@@ -83,28 +83,22 @@
     <h2>🎂 HAPPY BIRTHDAY 🎂</h2>
     <p>You did it, my love 💖</p>
 
-    <img src="birthday.gif" alt="Birthday GIF">
+    <video id="birthdayVideo" autoplay loop playsinline>
+      <source src="birthday.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
     <p>
       I love you more than coffee, naps,  
       and all the inside jokes combined 💕
     </p>
-
-    <!-- YouTube embed -->
-    <iframe width="300" height="170"
-      src="https://www.youtube.com/embed/K9P8rEw_6Dk?autoplay=1"
-      title="Birthday - The Beatles"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
   </div>
 
 </div>
 
 <script>
-  const ANSWER_1 = "10/02/1992";   // inside joke
-  const ANSWER_2 = "10";              // nickname
+  const ANSWER_1 = "10/02/1992";
+  const ANSWER_2 = "10";
 
   const WRONG_MESSAGES = [
     "Nope 😌 but I admire the confidence",
@@ -118,7 +112,7 @@
   }
 
   function checkStep1() {
-    const val = document.getElementById("answer1").value.toLowerCase().trim();
+    const val = document.getElementById("answer1").value.trim();
     if (val === ANSWER_1) {
       document.getElementById("step1").classList.add("hidden");
       document.getElementById("step2").classList.remove("hidden");
@@ -130,10 +124,14 @@
   }
 
   function checkStep2() {
-    const val = document.getElementById("answer2").value.toLowerCase().trim();
+    const val = document.getElementById("answer2").value.trim();
     if (val === ANSWER_2) {
       document.getElementById("step2").classList.add("hidden");
       document.getElementById("final").classList.remove("hidden");
+
+      // Ensure video plays (some browsers need explicit play call)
+      const video = document.getElementById("birthdayVideo");
+      video.play();
     } else {
       const e = document.getElementById("error2");
       e.textContent = randomError();
